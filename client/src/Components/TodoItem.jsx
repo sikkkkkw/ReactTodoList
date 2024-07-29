@@ -1,12 +1,17 @@
 import React from 'react';
 
 export default function TodoItem({ item, onDelete }) {
+  const formatDate = (date) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(date).toLocaleDateString(undefined, options);
+};
+
     return (
         <div className='w-full flex justify-center py-2'>
             <div className='w-full max-w-xl bg-white p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow flex items-center justify-between'>
                 <div className='flex flex-col'>
                     <span className='text-lg font-semibold text-gray-800'>
-                        {item.text}
+                        {formatDate(item.date)}<br/>{item.text}
                     </span>
                     <span className={`text-sm ${item.done ? 'text-green-600' : 'text-red-600'}`}>
                         {item.done ? '완료' : '미완료'}

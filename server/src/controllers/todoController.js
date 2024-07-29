@@ -2,11 +2,11 @@ const todolist =[
 
 ]
 let nextId = todolist.length > 0 ? Math.max(...todolist.map(item => item.id)) + 1 : 1;
-export const TodoList1 = (req, res)=>{
+export const TodoList = (req, res)=>{
     res.json(todolist);
 }
 
-export const TodoList= (req,res)=>{
+export const TodoListadd= (req,res)=>{
     const {text,done} = req.body;
     console.log("dwsds",req.body);
     const newTodo = {
