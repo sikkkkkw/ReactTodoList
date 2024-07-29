@@ -34,6 +34,16 @@ export default function InputText() {
         }).then(()=>fetchData());
         setInputValue('');
     };
+    const handleDelete = async (id) => {
+        try {
+            await fetch(`http://localhost:4000/api/todo/tododelete/${id}`, {
+                method: 'DELETE',
+            });
+            fetchData(); // 삭제 후 상태 업데이트
+        } catch (error) {
+            console.error('Error deleting todo:', error);
+        }
+    };
 
     return (
         <div className='w-full flex flex-col items-center space-y-6'>
@@ -63,7 +73,7 @@ export default function InputText() {
                 />
             </form>
             
-            <TodoBoard todoList={todoList} />
+            <TodoBoard todoList={todoList}  onDelete={handleDelete} />
         </div>
 
     );
