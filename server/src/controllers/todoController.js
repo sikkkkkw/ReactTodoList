@@ -8,7 +8,6 @@ export const TodoList = (req, res)=>{
 
 export const TodoListadd= (req,res)=>{
     const {text,done} = req.body;
-    console.log("dwsds",req.body);
     const newTodo = {
         id: nextId++, // nextId를 사용하여 id를 증가시킵니다.
         text,

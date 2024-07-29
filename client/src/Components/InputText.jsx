@@ -44,9 +44,24 @@ export default function InputText() {
             console.error('Error deleting todo:', error);
         }
     };
+    
+    const handleEdit = async (id, newText ,newDone) => {
+        try {
+            await fetch(`http://localhost:4000/api/todo/todoupdate/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: newText, done: newDone }),
+            });
+            fetchData(); // Update the list after editing
+        } catch (error) {
+            console.error('Error editing todo:', error);
+        }
+    };
 
     return (
-        <div className='w-full flex flex-col items-center space-y-6'>
+        <div className='w-full flex flex-col items-center space-y-6 mt-8'>
             <div className='text-5xl font-bold'>To-do List</div>
             <form onSubmit={onSubmitHandler} className='w-full flex items-center justify-center space-x-4'>
                 <input 
@@ -73,7 +88,7 @@ export default function InputText() {
                 />
             </form>
             
-            <TodoBoard todoList={todoList}  onDelete={handleDelete} />
+            <TodoBoard todoList={todoList}  onDelete={handleDelete} onEdit={handleEdit}/>
         </div>
 
     );
