@@ -1,5 +1,16 @@
 const todolist =[
-
+    {
+        id: 1,
+        text: '컨트롤+D 누르면 삭제기능 ',
+        done: true,
+        date: new Date().toISOString()
+    },
+    {
+        id: 2,
+        text: '리스트를 작성해 보세요.',
+        done: true,
+        date: new Date().toISOString()
+    },
 ]
 let nextId = todolist.length > 0 ? Math.max(...todolist.map(item => item.id)) + 1 : 1;
 export const TodoList = (req, res)=>{
