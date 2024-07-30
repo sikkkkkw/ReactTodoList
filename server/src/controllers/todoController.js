@@ -8,7 +8,7 @@ const todolist =[
     {
         id: 2,
         text: '리스트를 작성해 보세요.',
-        done: true,
+        done: false,
         date: new Date().toISOString()
     },
 ]
