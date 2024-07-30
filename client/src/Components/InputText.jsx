@@ -3,10 +3,12 @@ import TodoBoard from './TodoBoard.jsx';
 import Button from '@mui/material/Button';
 import { Checkbox } from '@mui/material';
 import TextField from '@mui/material/TextField';
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
 export default function InputText() {
     const [todoList, setTodoList] = useState([]);
     const [inputValue, setInputValue] = useState('');
+    const [filter, setFilter] = useState('all'); // 필터 상태 추가
 
     const fetchData = () => {
         fetch('http://localhost:4000/api/todo/todolist')
@@ -18,7 +20,7 @@ export default function InputText() {
         fetchData();
 
         const handleKeyDown = (e) => {
-            if (e.ctrlKey && e.key === 'd') {
+            if (e.ctrlKey && e.key.toLowerCase() === 'd') {
                 e.preventDefault();
                 if (todoList.length > 0) {
                     handleDelete(todoList[todoList.length - 1].id);
@@ -28,7 +30,6 @@ export default function InputText() {
 
         window.addEventListener('keydown', handleKeyDown);
 
-        // Cleanup event listener on component unmount
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
@@ -66,7 +67,7 @@ export default function InputText() {
             console.error('Error deleting todo:', error);
         }
     };
-    
+
     const handleEdit = async (id, newText, newDone) => {
         try {
             await fetch(`http://localhost:4000/api/todo/todoupdate/${id}`, {
@@ -81,6 +82,12 @@ export default function InputText() {
             console.error('Error editing todo:', error);
         }
     };
+
+    const filteredTodoList = todoList.filter(todo => {
+        if (filter === 'completed') return todo.done;
+        if (filter === 'pending') return !todo.done;
+        return true; // 'all'
+    });
 
     return (
         <div className='w-full flex flex-col items-center space-y-6 mt-8'>
@@ -107,8 +114,23 @@ export default function InputText() {
                     추가하기
                 </Button>
             </form>
-            
-            <TodoBoard todoList={todoList} onDelete={handleDelete} onEdit={handleEdit}/>
+
+            <div className='w-full flex justify-center space-x-4'>
+                <FormControl className='w-2/4'>
+                    <InputLabel id="filter-label">필터</InputLabel>
+                    <Select
+                        labelId="filter-label"
+                        value={filter}
+                        onChange={(e) => setFilter(e.target.value)}
+                        label="필터"
+                    >
+                        <MenuItem value="all">모두</MenuItem>
+                        <MenuItem value="completed">완료된 항목</MenuItem>
+                        <MenuItem value="pending">미완료 항목</MenuItem>
+                    </Select>
+                </FormControl>
+            </div>
+            <TodoBoard todoList={filteredTodoList} onDelete={handleDelete} onEdit={handleEdit}/>
         </div>
     );
 }
