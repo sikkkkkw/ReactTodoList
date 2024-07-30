@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button } from '@mui/material';
 
 export default function TodoItem({ item, onDelete, onEdit }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,18 +39,10 @@ export default function TodoItem({ item, onDelete, onEdit }) {
                     </span>
                 </div>
                 <div className='flex space-x-2'>
-                    <button
-                        className='px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'
-                        onClick={handleEditClick}
-                    >
-                        수정
-                    </button>
-                    <button
-                        className='px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500'
-                        onClick={() => onDelete(item.id)}
-                    >
-                        삭제
-                    </button>
+                    
+                    <Button className='px-3 py-1'  variant="contained" onClick={handleEditClick}>수정</Button>
+                    <Button className='px-3 py-1' color='error' variant="contained" onClick={() => onDelete(item.id)}>삭제</Button>
+                    
                 </div>
             </div>
 
@@ -73,18 +66,10 @@ export default function TodoItem({ item, onDelete, onEdit }) {
                             <label className="ml-2 text-gray-700">완료 여부</label>
                         </div>
                         <div className="flex space-x-4">
-                            <button
-                                className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
-                                onClick={handleSaveClick}
-                            >
-                                저장
-                            </button>
-                            <button
-                                className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
-                                onClick={handleCancelClick}
-                            >
-                                취소
-                            </button>
+                        
+                            <Button className='px-4 py-2'  variant="contained" color="success" onClick={handleSaveClick}>저장</Button>
+                            <Button className='px-4 py-2'  variant="contained" color='warning' onClick={handleCancelClick}>취소</Button>
+                            
                         </div>
                     </div>
                 </div>
