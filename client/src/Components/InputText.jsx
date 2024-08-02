@@ -34,6 +34,7 @@ export default function InputText() {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [todoList]);
+    
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
